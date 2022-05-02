@@ -118,7 +118,7 @@ class fNIRS_BIDS():
                 if temp_dict:          
                     temp_dict['__RequirementLevel__'] = __RequirementLevel__
                     temp_dict['__ErrorCode__'] = 'INVALID'
-                    temp_dict['__ErrorMessage__'] = ''
+                    temp_dict['__ErrorMessage__'] = 'In File '+ key+ ', some fields are missing'
                     metadata_validation_info[key] = temp_dict
                 
             else:
@@ -154,8 +154,9 @@ class fNIRS_BIDS():
                     paths = self.get_key_paths(key, datset_path, sub_or_ses_folder)
 
                     ###### This needs to be updated to get exact file location #####################
-                    key_name = os.path.join(sub_or_ses_folder, os.path.basename(paths[0]))
+                    
                     if  paths: 
+                        key_name = os.path.join(sub_or_ses_folder, os.path.basename(paths[0]))
                         ext = os.path.splitext(key)[1]
                         temp_dict = {}
                         __RequirementLevel__ = self.sub_folder_struture[key]['__RequirementLevel__']
@@ -199,7 +200,7 @@ class fNIRS_BIDS():
                                             row_key = 'row_'+str(row_number)
                                             temp_dict_2[row_key] = {'__RequirementLevel__':self.sub_folder_struture[key][sub_key],
                                                                  '__ErrorCode__': 'MISSING',
-                                                                 '__ErrorMessage__' : 'In '+sub_key+' column '+ 'row '+str(row_number)+ ' is empty'}
+                                                                 '__ErrorMessage__' : 'In '+sub_key+' column, row '+str(row_number)+ ' is empty'}
                                         if temp_dict_2:
                                             temp_dict[sub_key] = temp_dict_2
                                             temp_dict[sub_key]['__RequirementLevel__'] = self.sub_folder_struture[key][sub_key]
@@ -212,12 +213,13 @@ class fNIRS_BIDS():
                         if temp_dict:
                             temp_dict['__RequirementLevel__'] = __RequirementLevel__
                             temp_dict['__ErrorCode__'] = 'INVALID'
-                            temp_dict['__ErrorMessage__'] = ''
+                            temp_dict['__ErrorMessage__'] = 'In File '+ key_name+ ', some fields are missing'
                             metadata_validation_info[key_name] = temp_dict
                        
                         
                     else:
                         __RequirementLevel__ = self.sub_folder_struture[key]['__RequirementLevel__']
+                        key_name = os.path.join(sub_or_ses_folder, sub_or_ses_folder+'_****_'+key)
                         metadata_validation_info[key_name] = {'__RequirementLevel__' : __RequirementLevel__,
                                                               '__ErrorCode__' : 'MISSING',
                                                               '__ErrorMessage__': 'File '+ key_name+ ' is missing'
