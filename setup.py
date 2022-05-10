@@ -20,8 +20,9 @@ EMAIL = 'skura@bu.edu'
 AUTHOR = 'SK'
 REQUIRES_PYTHON = '>=3.6.0'
 
+VERSION = '0.0.3'
 about = {}
-about['__version__'] = '0.0.3'
+about['__version__'] = VERSION
 
 # What packages are required for this module to be executed?
 REQUIRED = [
